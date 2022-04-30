@@ -1,0 +1,5 @@
+faire une méthode change_room : 
+-change le fond 
+-replace le joueur
+-transition
+-réaffiche tous les murs/portes
