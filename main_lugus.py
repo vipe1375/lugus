@@ -42,7 +42,10 @@ while running:
     screen.blit(background, (0,0)) # on affiche le fond
 
     if game.is_playing:
-        game.update(screen) # mettre à jour les éléments
+        if game.check_end():
+            screen.blit(banner, (0, 0))
+        else:
+            game.update(screen) # mettre à jour les éléments
        
     else:
         screen.blit(banner, (415, 100)) # affichage de la bannière

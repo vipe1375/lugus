@@ -8,7 +8,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.current_image = 0
         self.images = animations.get(name)
         self.animation = False
-        print(self.images)
+        (self.images)
 
     def start_animation(self):
         self.animation = True

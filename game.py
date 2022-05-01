@@ -1,10 +1,14 @@
 import pygame
 import asyncio
-from players import Player
+
+# Import des classes de rôle:
+from player import Player
+from bomber import Bomber
+from killer import Killer
+from reviver import Reviver
+
 from sounds import SoundManager
-from wall import Wall
 from room import Room
-from bomb import Bomb
 
 class Game:
     def __init__(self):
@@ -27,6 +31,8 @@ class Game:
         # On crée un groupe qui rassemble tous les objets
         self.all_objects = pygame.sprite.Group()
 
+        self.players = pygame.sprite.Group()
+
         self.bombs = []
         
         self.pressed = {} # dictionnaire de gestion des touches
@@ -37,15 +43,20 @@ class Game:
 
         self.characters = ["red", "blue", "pink", "yellow", "black", "orange", "green", "cyan"]
         
-        self.player = Player(self) # création du joueur
+        self.player = Killer(self) # création du joueur
         
-        self.player2 = Player(self)
+        self.player2 = Bomber(self)
 
         self.player3 = Player(self)
         self.player3.rect.x = 100
         self.player3.rect.y = 100
         
         self.dead_players = pygame.sprite.Group()
+
+        self.end = False
+
+        self.killer = self.player
+        
 
         
         
@@ -88,7 +99,7 @@ class Game:
             self.player.move_down()
 
         elif self.pressed.get(pygame.K_SPACE):
-            self.player.drop_bomb()
+            self.player2.drop_bomb()
 
         # Joueur 2 test
 
@@ -123,8 +134,15 @@ class Game:
             self.player.kill()
 
         elif self.pressed.get(pygame.K_g):
-            
-            self.player.ressuscite()
+            pass
+            #self.player.ressuscite()
+
+    def check_end(self):
+        all_players_dead = True
+        for i in self.players:
+            if i.is_alive == True:
+                all_players_dead = False
+        return not self.killer.is_alive or all_players_dead
         
             
     
